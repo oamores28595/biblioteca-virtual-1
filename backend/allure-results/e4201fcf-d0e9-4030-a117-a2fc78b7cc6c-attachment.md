@@ -1,0 +1,137 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: libros.spec.js >> Módulo Libros >> Escenario 6 - Buscar libro existente
+- Location: tests\e2e\libros.spec.js:82:8
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('#shelf-libros')
+Expected substring: "1984"
+Received string:    ""
+Timeout: 5000ms
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('#shelf-libros')
+    14 × locator resolved to <div class="shelf" id="shelf-libros"></div>
+       - unexpected value ""
+
+```
+
+```yaml
+- banner:
+  - img
+  - text: Bibliotheca catálogo & préstamos
+  - navigation:
+    - button "Catálogo"
+    - button "Préstamos"
+    - button "Lectores"
+    - button "Panel"
+  - text: Bibliotecaria Demo
+  - button "Salir"
+- main:
+  - paragraph: Fondo bibliográfico
+  - heading "El catálogo" [level=1]
+  - button "+ Añadir libro"
+  - img
+  - textbox "Buscar por título, autor o ISBN…": "1984"
+  - combobox:
+    - option "Todas las categorías" [selected]
+    - option "Ciencia"
+    - option "Ciencia Ficción"
+    - option "Historia"
+    - option "Infantil"
+    - option "Novela"
+    - option "Poesía"
+    - option "Tecnología"
+  - checkbox "Solo disponibles"
+  - text: Solo disponibles
+  - paragraph: No se encontró ningún libro con esos criterios. Prueba otra búsqueda o añade uno nuevo.
+```
+
+# Test source
+
+```ts
+  1  | const { expect } = require('@playwright/test');
+  2  | 
+  3  | class LibrosPage{
+  4  | 
+  5  |     constructor(page){
+  6  |         this.page = page;
+  7  | 
+  8  |         this.btnNuevoLibro = page.locator('#btn-nuevo-libro');
+  9  |         this.inputBuscar = page.locator('#input-buscar');
+  10 |         this.selectCategoria = page.locator('#select-categoria');
+  11 |         this.checkDisponibles = page.locator('#check-disponibles');
+  12 | 
+  13 |         this.btnGuardar = page.locator('#form-libro button[type="submit"]');
+  14 |         this.txtTitulo = page.locator('#f-titulo');
+  15 |         this.txtAutor = page.locator('#f-autor');
+  16 | 
+  17 |         this.shelf = page.locator('#shelf-libros');
+  18 |         this.emptyState = page.locator('#catalogo-vacio');
+  19 |     }
+  20 | 
+  21 |     async abrir(){
+  22 |         await this.page.goto('http://localhost:3000');
+  23 |     }
+  24 | 
+  25 |     async crearLibro(titulo, autor, isbn = '', anio = ''){
+  26 |         await this.btnNuevoLibro.click();
+  27 |         await this.txtTitulo.fill(titulo);
+  28 |         await this.txtAutor.fill(autor);
+  29 |         if (isbn) await this.page.locator('#f-isbn').fill(isbn);
+  30 |         if (anio) await this.page.locator('#f-anio').fill(String(anio));
+  31 |         await this.btnGuardar.click();
+  32 |         // esperar a que el modal se cierre y el catálogo se refresque
+  33 |         await expect(this.emptyState).toBeHidden().catch(() => {});
+  34 |     }
+  35 | 
+  36 |     async buscarLibro(termino){
+  37 |         await this.inputBuscar.fill(termino);
+  38 |         // esperar debounce + render
+  39 |         await this.page.waitForTimeout(400);
+  40 |     }
+  41 | 
+  42 |     async verificarLibro(titulo){
+> 43 |         await expect(this.shelf).toContainText(titulo);
+     |                                  ^ Error: expect(locator).toContainText(expected) failed
+  44 |     }
+  45 | 
+  46 |     async verificarMensajeSinResultados(){
+  47 |         await expect(this.emptyState).toBeVisible();
+  48 |     }
+  49 | 
+  50 |     async editarPrimerLibro(nuevoTitulo) {
+  51 |         await this.page.locator('button[data-accion="editar-libro"]').first().click();
+  52 |         await this.txtTitulo.fill(nuevoTitulo);
+  53 |         await this.btnGuardar.click();
+  54 |     }
+  55 | 
+  56 |     async eliminarPrimerLibro(){
+  57 |         // Click delete on first book and confirm the confirm() dialog
+  58 |         this.page.on('dialog', async dialog => {
+  59 |             await dialog.accept();
+  60 |         });
+  61 |         await this.page.locator('button[data-accion="borrar-libro"]').first().click();
+  62 |         // wait a bit for deletion to reflect
+  63 |         await this.page.waitForTimeout(300);
+  64 |     }
+  65 | 
+  66 |     async verificarLibroNoExiste(titulo){
+  67 |         await expect(this.shelf).not.toContainText(titulo);
+  68 |     }
+  69 | 
+  70 | }
+  71 | 
+  72 | module.exports = LibrosPage;
+```

@@ -1,0 +1,470 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: libros.spec.js >> Módulo Libros >> Escenario 9 - Registrar un libro
+- Location: tests\e2e\libros.spec.js:114:9
+
+# Error details
+
+```
+Error: expect(locator).toContainText(expected) failed
+
+Locator: locator('#shelf-libros')
+Timeout: 5000ms
+- Expected substring  -   1
++ Received string     + 141
+
+- Andre Gabriel
++
++       
++         TEC-007
++         Clean Code
++         Robert C. Martin · 2008
++         
++           Tecnología
++           4/4 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         CIE-005
++         Cosmos
++         Carl Sagan · 1980
++         
++           Ciencia
++           2/2 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         INF-002
++         El principito
++         Antoine de Saint-Exupéry · 1943
++         
++           Infantil
++           6/6 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         CIE-003
++         Fahrenheit 451
++         Ray Bradbury · 1953
++         
++           Ciencia Ficción
++           3/3 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         GEN-031
++         Playwright Testing 2
++         Orlando Amores · 2026
++         
++           Sin categoría
++           1/1 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         GEN-033
++         Playwright Testing Actualizado
++         Orlando Amores · 2026
++         
++           Sin categoría
++           1/1 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         NOV-009
++         Rayuela
++         Julio Cortázar · 1963
++         
++           Novela
++           2/2 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         HIS-004
++         Sapiens: De animales a dioses
++         Yuval Noah Harari · 2011
++         
++           Historia
++           5/5 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         POE-006
++         Veinte poemas de amor
++         Pablo Neruda · 1924
++         
++           Poesía
++           3/3 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
++       
++         GEN-032
++         ejemplo 1
++         Orlando Amores · 2026
++         
++           Sin categoría
++           1/1 disp.
++         
++         
++           Editar
++           Quitar
++         
++       
++     
+
+Call log:
+  - Expect "toContainText" with timeout 5000ms
+  - waiting for locator('#shelf-libros')
+    14 × locator resolved to <div class="shelf" id="shelf-libros">…</div>
+       - unexpected value "
+      
+        TEC-007
+        Clean Code
+        Robert C. Martin · 2008
+        
+          Tecnología
+          4/4 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        CIE-005
+        Cosmos
+        Carl Sagan · 1980
+        
+          Ciencia
+          2/2 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        INF-002
+        El principito
+        Antoine de Saint-Exupéry · 1943
+        
+          Infantil
+          6/6 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        CIE-003
+        Fahrenheit 451
+        Ray Bradbury · 1953
+        
+          Ciencia Ficción
+          3/3 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        GEN-031
+        Playwright Testing 2
+        Orlando Amores · 2026
+        
+          Sin categoría
+          1/1 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        GEN-033
+        Playwright Testing Actualizado
+        Orlando Amores · 2026
+        
+          Sin categoría
+          1/1 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        NOV-009
+        Rayuela
+        Julio Cortázar · 1963
+        
+          Novela
+          2/2 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        HIS-004
+        Sapiens: De animales a dioses
+        Yuval Noah Harari · 2011
+        
+          Historia
+          5/5 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        POE-006
+        Veinte poemas de amor
+        Pablo Neruda · 1924
+        
+          Poesía
+          3/3 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    
+      
+        GEN-032
+        ejemplo 1
+        Orlando Amores · 2026
+        
+          Sin categoría
+          1/1 disp.
+        
+        
+          Editar
+          Quitar
+        
+      
+    "
+
+```
+
+```yaml
+- article:
+  - text: TEC-007
+  - heading "Clean Code" [level=3]
+  - paragraph: Robert C. Martin · 2008
+  - text: Tecnología 4/4 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: CIE-005
+  - heading "Cosmos" [level=3]
+  - paragraph: Carl Sagan · 1980
+  - text: Ciencia 2/2 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: INF-002
+  - heading "El principito" [level=3]
+  - paragraph: Antoine de Saint-Exupéry · 1943
+  - text: Infantil 6/6 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: CIE-003
+  - heading "Fahrenheit 451" [level=3]
+  - paragraph: Ray Bradbury · 1953
+  - text: Ciencia Ficción 3/3 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: GEN-031
+  - heading "Playwright Testing 2" [level=3]
+  - paragraph: Orlando Amores · 2026
+  - text: Sin categoría 1/1 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: GEN-033
+  - heading "Playwright Testing Actualizado" [level=3]
+  - paragraph: Orlando Amores · 2026
+  - text: Sin categoría 1/1 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: NOV-009
+  - heading "Rayuela" [level=3]
+  - paragraph: Julio Cortázar · 1963
+  - text: Novela 2/2 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: HIS-004
+  - 'heading "Sapiens: De animales a dioses" [level=3]'
+  - paragraph: Yuval Noah Harari · 2011
+  - text: Historia 5/5 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: POE-006
+  - heading "Veinte poemas de amor" [level=3]
+  - paragraph: Pablo Neruda · 1924
+  - text: Poesía 3/3 disp.
+  - button "Editar"
+  - button "Quitar"
+- article:
+  - text: GEN-032
+  - heading "ejemplo 1" [level=3]
+  - paragraph: Orlando Amores · 2026
+  - text: Sin categoría 1/1 disp.
+  - button "Editar"
+  - button "Quitar"
+```
+
+# Test source
+
+```ts
+  1  | const { expect } = require('@playwright/test');
+  2  | 
+  3  | class LibrosPage{
+  4  | 
+  5  |     constructor(page){
+  6  |         this.page = page;
+  7  | 
+  8  |         this.btnNuevoLibro = page.locator('#btn-nuevo-libro');
+  9  |         this.inputBuscar = page.locator('#input-buscar');
+  10 |         this.selectCategoria = page.locator('#select-categoria');
+  11 |         this.checkDisponibles = page.locator('#check-disponibles');
+  12 | 
+  13 |         this.btnGuardar = page.locator('#form-libro button[type="submit"]');
+  14 |         this.txtTitulo = page.locator('#f-titulo');
+  15 |         this.txtAutor = page.locator('#f-autor');
+  16 | 
+  17 |         this.shelf = page.locator('#shelf-libros');
+  18 |         this.emptyState = page.locator('#catalogo-vacio');
+  19 |     }
+  20 | 
+  21 |     async abrir(){
+  22 |         await this.page.goto('http://localhost:3000');
+  23 |     }
+  24 | 
+  25 |     async crearLibro(titulo, autor, isbn = '', anio = ''){
+  26 |         await this.btnNuevoLibro.click();
+  27 |         await this.txtTitulo.fill(titulo);
+  28 |         await this.txtAutor.fill(autor);
+  29 |         if (isbn) await this.page.locator('#f-isbn').fill(isbn);
+  30 |         if (anio) await this.page.locator('#f-anio').fill(String(anio));
+  31 |         await this.btnGuardar.click();
+  32 |         // esperar a que el modal se cierre y el catálogo se refresque
+  33 |         await expect(this.emptyState).toBeHidden().catch(() => {});
+  34 |     }
+  35 | 
+  36 |     async buscarLibro(termino){
+  37 |         await this.inputBuscar.fill(termino);
+  38 |         // esperar debounce + render
+  39 |         await this.page.waitForTimeout(400);
+  40 |     }
+  41 | 
+  42 |     async verificarLibro(titulo){
+> 43 |         await expect(this.shelf).toContainText(titulo);
+     |                                  ^ Error: expect(locator).toContainText(expected) failed
+  44 |     }
+  45 | 
+  46 |     async verificarMensajeSinResultados(){
+  47 |         await expect(this.emptyState).toBeVisible();
+  48 |     }
+  49 | 
+  50 |     async editarPrimerLibro(nuevoTitulo) {
+  51 |         await this.page.locator('button[data-accion="editar-libro"]').first().click();
+  52 |         await this.txtTitulo.fill(nuevoTitulo);
+  53 |         await this.btnGuardar.click();
+  54 |     }
+  55 | 
+  56 |     async eliminarPrimerLibro(titulo = null){
+  57 |         // If a title is provided, find the book card that contains that title and click its delete button.
+  58 |         this.page.on('dialog', async dialog => {
+  59 |             await dialog.accept();
+  60 |         });
+  61 | 
+  62 |         if (titulo) {
+  63 |             const card = this.shelf.locator(`.libro-card:has-text("${titulo}")`);
+  64 |             const btn = card.locator('button[data-accion="borrar-libro"]');
+  65 |             await btn.first().click();
+  66 |         } else {
+  67 |             await this.page.locator('button[data-accion="borrar-libro"]').first().click();
+  68 |         }
+  69 | 
+  70 |         // wait a bit for deletion to reflect
+  71 |         await this.page.waitForTimeout(300);
+  72 |     }
+  73 | 
+  74 |     async verificarLibroNoExiste(titulo){
+  75 |         await expect(this.shelf).not.toContainText(titulo);
+  76 |     }
+  77 | 
+  78 | }
+  79 | 
+  80 | module.exports = LibrosPage;
+```
